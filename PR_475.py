@@ -329,17 +329,10 @@ match_criteria = {
     "destination_address": "192.0.3.0"
 }
 
-
-# myl = ["20.10.1.1", "20.10.2.0", "20.10.1.2", "20.10.2.2",
-#        "20.10.1.0", "20.10.1.1", "20.10.2.0", "20.10.1.2", "20.10.2.2"]
-# for i in myl:
-#     if "20.10.1.0" == i:
-#         print("Hello world")
-#     else:
-#         print("Not a good hello")
-
-
 # Thinking 2
+
+
+
 match_temp, temp2 = [], []
 
 
