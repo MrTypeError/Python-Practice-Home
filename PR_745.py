@@ -1,4 +1,3 @@
-
 data = {
     "acls_data": [
         {
@@ -199,3 +198,51 @@ data = {
 }
 
 
+filter_operation = {
+    "filter_options": {
+        "match_all": True
+    }
+}
+
+match_criteria = {
+    "afi": "ipv4",
+    "source_address": "192.0.2.0",
+    "destination_address": "192.0.3.0"
+}
+
+
+def validator_func(each_ace, match_criteria, filter_operation, name, afi):
+    pass
+
+
+
+def delete_aces(data, match_criteria, filter_operation):
+    ace_v4, ace_v6 = [], []
+    rem_ace_v4, rem_ace_v6 = [], []
+
+    flinal_acls = {"acls": [{"aces": ace_v4, "afi": "ipv4"}], "acls": [
+        {"aces": ace_v6, "afi": "ipv6"}]}
+    rem_acls = {"acls": [{"aces": rem_ace_v4, "afi": "ipv4"}],
+                "acls": [{"aces": rem_ace_v6, "afi": "ipv6"}]}
+
+    remove_first_only = True if filter_operation.get(
+        "match_all") is True else False
+
+    for acls in data.get("acls_data"):
+        afi = acls.get("afi")
+
+        for acl in acls.get("acls"):
+            aces_inner, acls_inner = [], {}
+            remace_inner, remacls_inner = [], {}
+            holt = True
+
+            aces = acl.get("aces", [])
+
+            name = acl.get("name", "No String")
+
+            for each_ace in aces:
+                temp = validator_func(
+                    each_ace, match_criteria, filter_operation, name, afi)
+
+
+delete_aces(data, match_criteria, filter_operation)
