@@ -211,8 +211,24 @@ match_criteria = {
 }
 
 
+
 def validator_func(each_ace, match_criteria, filter_operation, name, afi):
-    pass
+    check_list  , future_use = ["source" , "destination" , "afi"] , []
+    for key , val in each_ace.items():
+            if key not in check_list:
+                if each_ace.get(key , "Not Found") == match_criteria.get(key , "Not Found"):
+                     future_use.append(True)
+                else :
+                     future_use.append(False)
+            elif(name == key ):
+                future_use.append(True) if name == match_criteria.get(key) else future_use.append(False)
+
+            elif(afi == key ):
+                future_use.append(True) if name == match_criteria.get(key) else future_use.append(False)
+            else:
+                          
+                     
+               
 
 
 
@@ -241,8 +257,7 @@ def delete_aces(data, match_criteria, filter_operation):
             name = acl.get("name", "No String")
 
             for each_ace in aces:
-                temp = validator_func(
-                    each_ace, match_criteria, filter_operation, name, afi)
+                temp = validator_func(each_ace, match_criteria, filter_operation, name, afi)
 
 
 delete_aces(data, match_criteria, filter_operation)
