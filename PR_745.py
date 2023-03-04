@@ -215,20 +215,36 @@ match_criteria = {
 def validator_func(each_ace, match_criteria, filter_operation, name, afi):
     check_list  , future_use = ["source" , "destination" , "afi"] , []
     for key , val in each_ace.items():
-            if key not in check_list:
-                if each_ace.get(key , "Not Found") == match_criteria.get(key , "Not Found"):
-                     future_use.append(True)
-                else :
-                     future_use.append(False)
-            elif(name == key ):
-                future_use.append(True) if name == match_criteria.get(key) else future_use.append(False)
+            if val:
+                if key not in check_list:
+                    if each_ace.get(key , "Not Found") == match_criteria.get(key , "Not Found"):
+                        future_use.append(True)
+                    else :
+                        future_use.append(False)
+                elif(name == key ):
+                    future_use.append(True) if name == match_criteria.get(key) else future_use.append(False)
 
-            elif(afi == key ):
-                future_use.append(True) if name == match_criteria.get(key) else future_use.append(False)
+                elif(afi == key ):
+                    future_use.append(True) if name == match_criteria.get(key) else future_use.append(False)
+                else:
+
+                    valid_list = []
+                    local_check = "source" if each_ace.get(key) == match_criteria.get(key) else "destination"
+
+                    valid_list.append(True) if each_ace.get(local_check).get("address" , "Not Found") == match_criteria.get(key) else valid_list.append(False)
+
+                    valid_list.append(True) if each_ace.get(local_check).get("host" , "Not Found") == match_criteria.get(key) else valid_list.append(False)
+
+                    valid_list.append(True) if each_ace.get(local_check).get("any" , "Not Found") == match_criteria.get(key) == "any" else valid_list.append(False)
+
+                    future_use.append(any(valid_list))
+
+            if filter_operation.get("match_all") : 
+                return all(future_use)
             else:
-                          
-                     
-               
+                return any(future_use)
+    
+            
 
 
 
