@@ -14,9 +14,20 @@ very prone to errors and is not good with respect to security
 
 
 # Another Approach 
+
+def isdigit_accumalator()
+
+
+
+
+special_characters = list("!@#$%^&*()-+?_=,<>/")
 result = [] 
 expression = input()
-
 storage_list = list(expression)
-# storage_list.append()
-print(storage_list)
+
+for i in storage_list:
+    if i.isdigit():
+        isdigit_accumalator()
+    elif any(storage_list[0] and storage_list[-1]) == special_characters :
+        raise ValueError
+    
